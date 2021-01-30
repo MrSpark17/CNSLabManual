@@ -1,0 +1,45 @@
+//UDP Server
+
+import java.net.*; 
+import java.util.Scanner;
+//import java.net.InetAddress; 
+class myUDPServer 
+{ 
+public static void main(String args[]) throws Exception 
+{ 
+DatagramSocket serverSocket = new DatagramSocket(9878); 
+byte[] receiveData=new byte[1024]; 
+byte[] sendData=new byte[1024]; 
+//while(true) 
+//{ 
+System.out.println("Server is Up"); 
+
+DatagramPacket receivePacket=new DatagramPacket(receiveData,receiveData.length); 
+
+serverSocket.receive(receivePacket); 
+
+String sentence=new String(receivePacket.getData()); 
+
+System.out.println("RECEIVED:"+sentence); 
+
+InetAddress IPAddress=receivePacket.getAddress(); 
+
+int port=receivePacket.getPort(); 
+
+//String replySentence= "CNS";
+
+System.out.println("Enter message to send");
+Scanner sc = new Scanner(System.in);
+String replySentence=sc.nextLine();
+
+sendData=replySentence.getBytes(); 
+
+DatagramPacket sendPacket=new 
+DatagramPacket(sendData,sendData.length,IPAddress,port); 
+
+
+serverSocket.send(sendPacket); 
+//} 
+   serverSocket.close();
+} 
+}
